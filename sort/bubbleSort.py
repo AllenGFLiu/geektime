@@ -1,6 +1,6 @@
-# 基于Python实现冒泡排序-BubbleSort
-# Author: AllenGFLiu
-# 冒泡排序原理：
+#   基于Python实现冒泡排序-BubbleSort
+#   Author: AllenGFLiu
+#   冒泡排序原理：
 #   取list中的第一个元素循环跟其他元素比对，如果前者大于后者，则二者交换位置，称为一次冒泡
 #   如上冒泡动作执行 len(list) - 1 次即可
 #   冒泡排序不需要额外空间，所以空间复杂度为 O(1)， 属于原地排序算法
