@@ -43,9 +43,11 @@ class BinarySearchTree:
     并把此最小值節點從原來的位置刪除;
     情形二和情形三: 要刪除的節點是葉子節點或者只有一個子節點,那麼定位到以後執行刪除動作即可.
     綜上兩大種情形,我們都是要先定位的,所以delete代碼中對兩個子節點的情形做一個專門的定位,
-    剩下的動作,就可以用一直的代碼了
+    剩下的動作,就可以用一致的代碼了
+    
+    in_order : 實現二叉查找樹的中序遍歷,能輸出一個有序列表
     """
-    def __init__(self, value):
+    def __init__(self):
         self._root = None
 
     def insert(self, value):
@@ -112,8 +114,33 @@ class BinarySearchTree:
         else:
             parent.right = child
 
+    def _in_order(self, node):
+        # 中序遍歷輔助函數
+        if node is None :
+            return []
+
+        res = []
+        res.extend(self._in_order(node.left))
+        res.append(node._val)
+        res.extend(self._in_order(node.right))
+        return res
+
+    def in_order(self):
+        # 中序遍歷
+        # 調用方式:in_order()
+        if self._root is None:
+            return []
+        
+        return self._in_order(self._root)
 
 
-
-
-
+if __name__ == '__main__':
+    bst = BinarySearchTree()
+    bst.insert(15)
+    bst.insert(8)
+    bst.insert(20)
+    bst.insert(3)
+    bst.insert(10)
+    bst.insert(16)
+    bst.insert(24)
+    print(bst.in_order())
