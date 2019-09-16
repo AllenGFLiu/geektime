@@ -9,6 +9,9 @@
 # #####################################################
 
 
+from queue import ListQueue
+
+
 class TreeNode:
     """二叉樹中每個節點都有三個屬性
 
@@ -43,9 +46,9 @@ class BinarySearchTree:
     并把此最小值節點從原來的位置刪除;
     情形二和情形三: 要刪除的節點是葉子節點或者只有一個子節點,那麼定位到以後執行刪除動作即可.
     綜上兩大種情形,我們都是要先定位的,所以delete代碼中對兩個子節點的情形做一個專門的定位,
-    剩下的動作,就可以用一直的代碼了
+    剩下的動作,就可以用一致的代碼了
     """
-    def __init__(self, value):
+    def __init__(self):
         self._root = None
 
     def insert(self, value):
@@ -75,6 +78,27 @@ class BinarySearchTree:
         while node and node._val != value:
             node = node.left if node._val > value else node.right
         return node
+
+    def get_left(self, node):
+        tmp_node = self._root
+        while tmp_node and tmp_node._val != node._val:
+            tmp_node = tmp_node.left if tmp_node._val > node._val else tmp_node.right
+        
+        if tmp_node.left:
+            return tmp_node.left._val
+        else:
+            return 'null'
+
+    def get_right(self, node):
+        tmp_node = self._root
+        while tmp_node and tmp_node._val != node._val:
+            tmp_node = tmp_node.left if tmp_node._val > node._val else tmp_node.right
+        
+        if tmp_node.right:
+            return tmp_node.right._val
+        else:
+            return 'null'
+
 
     def delete(self, value):
         # 無論如何都是要先定位到要刪除的節點處的
@@ -113,6 +137,34 @@ class BinarySearchTree:
             parent.right = child
 
 
+def bfs_print(bst):
+        list_queue = ListQueue()
+        tmp_node = bst._root
+        list_queue.enqueue(tmp_node._val)
+        while not list_queue.is_empty():
+            tmp_node = TreeNode(list_queue.dequeue())
+            print(list_queue.dequeue())
+
+            if bst.get_left(tmp_node):
+                left_value = bst.get_left(tmp_node)
+                list_queue.enqueue(left_value)
+                print(left_value, end=' ')
+
+            if bst.get_right(tmp_node):
+                right_value = bst.get_right(tmp_node)
+                list_queue.enqueue(right_value)
+                print(right_value, end=' ')
+
+
+
+if __name__ == "__main__":
+    bst = BinarySearchTree()
+    l = [12, 10, 15, 8, 11, 14, 17]
+    for i in l:
+        bst.insert(i)
+
+    bfs_print(bst)
+    
 
 
 
