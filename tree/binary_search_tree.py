@@ -105,7 +105,7 @@ class BinarySearchTree:
         # 如果要刪除的節點有兩個子節點,那上面的if 塊內的代碼就會執行,並且也發生了置換,但還剩下刪除最小值節點這一步
         # 如果要刪除的節點是葉子節點或者只有一個子節點,那上面的if 塊不會執行,就直接來次刪除來了
         # 所以if 塊內的parent和node 二次賦值這個動作很重要
-        child = node.left if nodel.left else node.right
+        child = node.left if node.left else node.right
         if parent is None:
             # 這種情況比較特殊,是樹中只有兩個節點:根節點和它的一個子節點(左或右),並且根節點的值等於value
             self._root = child
@@ -143,4 +143,6 @@ if __name__ == '__main__':
     bst.insert(10)
     bst.insert(16)
     bst.insert(24)
+    print(bst.in_order())
+    bst.delete(15)
     print(bst.in_order())
