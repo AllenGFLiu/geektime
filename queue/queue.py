@@ -70,17 +70,24 @@ class ListQueue:
         self._tail = new_node
 
     def dequeue(self):
+        return_value = self._head._value
         if self._head != self._tail:
-                tmp_node = self._tail
-                while tmp_node.next._value != self._head._value:
-                    tmp_node = tmp_node.next
-                tmp_node.next = None
-                self._head = tmp_node
+            tmp_node = self._tail
+            while tmp_node.next._value != self._head._value:
+                tmp_node = tmp_node.next
+            tmp_node.next = None
+            self._head = tmp_node
+            # return return_value
         else:
             self._head = None
             self._tail = None
+            # return
+        return return_value
             
-        
+    def is_empty(self):
+        if self._head:
+            return False
+        return True    
         
     def __repr__(self):
         nums = []

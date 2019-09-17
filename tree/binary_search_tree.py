@@ -9,6 +9,9 @@
 # #####################################################
 
 
+from queue import ListQueue
+
+
 class TreeNode:
     """二叉樹中每個節點都有三個屬性
 
@@ -78,6 +81,27 @@ class BinarySearchTree:
             node = node.left if node._val > value else node.right
         return node
 
+    def get_left(self, node):
+        tmp_node = self._root
+        while tmp_node and tmp_node._val != node._val:
+            tmp_node = tmp_node.left if tmp_node._val > node._val else tmp_node.right
+        
+        if tmp_node.left:
+            return tmp_node.left._val
+        else:
+            return 'null'
+
+    def get_right(self, node):
+        tmp_node = self._root
+        while tmp_node and tmp_node._val != node._val:
+            tmp_node = tmp_node.left if tmp_node._val > node._val else tmp_node.right
+        
+        if tmp_node.right:
+            return tmp_node.right._val
+        else:
+            return 'null'
+
+
     def delete(self, value):
         # 無論如何都是要先定位到要刪除的節點處的
         node = self._root
@@ -124,6 +148,35 @@ class BinarySearchTree:
         res.append(node._val)
         res.extend(self._in_order(node.right))
         return res
+    
+def bfs_print(bst):
+        list_queue = ListQueue()
+        tmp_node = bst._root
+        list_queue.enqueue(tmp_node._val)
+        while not list_queue.is_empty():
+            tmp_node = TreeNode(list_queue.dequeue())
+            print(list_queue.dequeue())
+
+            if bst.get_left(tmp_node):
+                left_value = bst.get_left(tmp_node)
+                list_queue.enqueue(left_value)
+                print(left_value, end=' ')
+
+            if bst.get_right(tmp_node):
+                right_value = bst.get_right(tmp_node)
+                list_queue.enqueue(right_value)
+                print(right_value, end=' ')
+
+
+
+if __name__ == "__main__":
+    bst = BinarySearchTree()
+    l = [12, 10, 15, 8, 11, 14, 17]
+    for i in l:
+        bst.insert(i)
+
+    bfs_print(bst)
+    
 
     def in_order(self):
         # 中序遍歷
