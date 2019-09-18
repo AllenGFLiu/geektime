@@ -100,6 +100,20 @@ def merge_two_sorted_list(l1, l2):
     return l1 or l2
 
 
+def remove_specific_node(node, val):
+    former_node = Node(None)
+    tmp_node = node
+    while tmp_node:
+        if tmp_node._value != val:
+            former_node = tmp_node
+        else:
+            former_node._next = tmp_node._next
+        tmp_node = tmp_node._next
+    return node
+
+    
+
+
 if __name__ == '__main__':
     # my_list = LinkedList()
     # my_list.insert('a')
@@ -112,13 +126,23 @@ if __name__ == '__main__':
     # print(my_list)
     # reverse_list = my_list.reverse()
     # print_node(reverse_list)
-    l1 = LinkedList()
-    l1.insert(3)
-    l1.insert(4)
-    l1.insert(9)
-    l2 = LinkedList()
-    l2.insert(2)
-    l2.insert(5)
-    l2.insert(6)
-    new_list = merge_two_sorted_list(l1.head, l2.head)
+
+    # l1 = LinkedList()
+    # l1.insert(3)
+    # l1.insert(4)
+    # l1.insert(9)
+    # l2 = LinkedList()
+    # l2.insert(2)
+    # l2.insert(5)
+    # l2.insert(6)
+    # new_list = merge_two_sorted_list(l1.head, l2.head)
+    # print_node(new_list)
+
+    remove_list = LinkedList()
+    remove_list.insert('d')
+    remove_list.insert('a')
+    remove_list.insert('e')
+    remove_list.insert('f')
+    remove_list.insert('a')
+    new_list = remove_specific_node(remove_list.head, 'a')
     print_node(new_list)
