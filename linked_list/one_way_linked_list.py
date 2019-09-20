@@ -100,6 +100,21 @@ def merge_two_sorted_list(l1, l2):
     return l1 or l2
 
 
+def find_middle_node(head):
+    """给定一个链表，返回中间节点，
+    如果是偶数个数，返回中间两个的后一个。
+    方法：设定快慢两个指针，慢的每次走一步，快的每次走两步。
+    待快的指针为空或者快指针的next为空时，慢的就是正好中间的那个节点。
+    """
+
+    slow = head
+    fast = head
+    while fast and fast._next:
+        slow = slow._next
+        fast = fast._next._next
+    return slow
+
+
 if __name__ == '__main__':
     # my_list = LinkedList()
     # my_list.insert('a')
@@ -112,13 +127,24 @@ if __name__ == '__main__':
     # print(my_list)
     # reverse_list = my_list.reverse()
     # print_node(reverse_list)
-    l1 = LinkedList()
-    l1.insert(3)
-    l1.insert(4)
-    l1.insert(9)
-    l2 = LinkedList()
-    l2.insert(2)
-    l2.insert(5)
-    l2.insert(6)
-    new_list = merge_two_sorted_list(l1.head, l2.head)
-    print_node(new_list)
+    
+    # l1 = LinkedList()
+    # l1.insert(3)
+    # l1.insert(4)
+    # l1.insert(9)
+    # l2 = LinkedList()
+    # l2.insert(2)
+    # l2.insert(5)
+    # l2.insert(6)
+    # new_list = merge_two_sorted_list(l1.head, l2.head)
+    # print_node(new_list)
+
+    middle_list = LinkedList()
+    middle_list.insert(1)
+    middle_list.insert(2)
+    middle_list.insert(3)
+    middle_list.insert(4)
+    middle_list.insert(5)
+    # middle_list.insert(6)
+    middle_node = find_middle_node(middle_list.head)
+    print_node(middle_node)
