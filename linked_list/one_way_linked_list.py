@@ -115,6 +115,29 @@ def find_middle_node(head):
     return slow
 
 
+def remove_duplicate_node(head):
+    """给定一个排序链表，去除其重复的节点，使得每个节点只出现一次，返回新链表。
+    方法：双指针的变形。
+    设定former和node指针，former.next = node,
+    如果former和node指向的节点的值相同,former.next = node.next,
+    否则former = node.
+    """
+
+    if head is None:
+        return []
+
+    former = head
+    node = head._next
+    while node:
+        if node._value == former._value:
+            former._next = node._next
+        else:
+            former = node
+        node = node._next
+    return head
+
+
+
 if __name__ == '__main__':
     # my_list = LinkedList()
     # my_list.insert('a')
@@ -139,12 +162,22 @@ if __name__ == '__main__':
     # new_list = merge_two_sorted_list(l1.head, l2.head)
     # print_node(new_list)
 
-    middle_list = LinkedList()
-    middle_list.insert(1)
-    middle_list.insert(2)
-    middle_list.insert(3)
-    middle_list.insert(4)
-    middle_list.insert(5)
-    # middle_list.insert(6)
-    middle_node = find_middle_node(middle_list.head)
-    print_node(middle_node)
+    # middle_list = LinkedList()
+    # middle_list.insert(1)
+    # middle_list.insert(2)
+    # middle_list.insert(3)
+    # middle_list.insert(4)
+    # middle_list.insert(5)
+    # # middle_list.insert(6)
+    # middle_node = find_middle_node(middle_list.head)
+    # print_node(middle_node)
+
+    my_list = LinkedList()
+    my_list.insert(1)
+    my_list.insert(1)
+    my_list.insert(3)
+    my_list.insert(4)
+    my_list.insert(5)
+    my_list.insert(5)
+    new_list = remove_duplicate_node(my_list.head)
+    print_node(new_list)
