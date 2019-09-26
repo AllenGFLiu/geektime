@@ -25,11 +25,19 @@ class LinkedList:
 
     def insert(self, value):
         new_node = Node(value)
+        # if self.head is None:
+        #     self.head = new_node
+        #     self.tail = new_node
+        # self.tail._next = new_node
+        # self.tail = new_node
         if self.head is None:
             self.head = new_node
-            self.tail = new_node
-        self.tail._next = new_node
-        self.tail = new_node
+            return
+
+        node = self.head
+        while node._next:
+            node = node._next
+        node._next = new_node
 
     def __repr__(self):
         if self.head == None:
@@ -45,12 +53,21 @@ class LinkedList:
         if self.head == None:
             return
         node = self.head
-        last_node = None
-        while node != self.tail:
-            last_node = node
+        before_node = None
+        while node._next:
+            before_node = node
             node = node._next
-        last_node._next = None
-        self.tail = last_node
+        if before_node:
+            before_node._next = None
+        else:
+            self.head = None
+        
+        # last_node = None
+        # while node != self.tail:
+        #     last_node = node
+        #     node = node._next
+        # last_node._next = None
+        # self.tail = last_node
 
     def reverse(self):
         """反轉鏈錶.
@@ -139,17 +156,17 @@ def remove_duplicate_node(head):
 
 
 if __name__ == '__main__':
-    # my_list = LinkedList()
-    # my_list.insert('a')
-    # my_list.insert('b')
-    # my_list.insert('c')
-    # my_list.insert('d')
-    # my_list.insert('e')
-    # print(my_list)
-    # my_list.delete()
-    # print(my_list)
-    # reverse_list = my_list.reverse()
-    # print_node(reverse_list)
+    my_list = LinkedList()
+    my_list.insert('a')
+    my_list.insert('b')
+    my_list.insert('c')
+    my_list.insert('d')
+    my_list.insert('e')
+    print(my_list)
+    my_list.delete()
+    print(my_list)
+    reverse_list = my_list.reverse()
+    print_node(reverse_list)
     
     # l1 = LinkedList()
     # l1.insert(3)
@@ -172,12 +189,12 @@ if __name__ == '__main__':
     # middle_node = find_middle_node(middle_list.head)
     # print_node(middle_node)
 
-    my_list = LinkedList()
-    my_list.insert(1)
-    my_list.insert(1)
-    my_list.insert(3)
-    my_list.insert(4)
-    my_list.insert(5)
-    my_list.insert(5)
-    new_list = remove_duplicate_node(my_list.head)
-    print_node(new_list)
+    # my_list = LinkedList()
+    # my_list.insert(1)
+    # my_list.insert(1)
+    # my_list.insert(3)
+    # my_list.insert(4)
+    # my_list.insert(5)
+    # my_list.insert(5)
+    # new_list = remove_duplicate_node(my_list.head)
+    # print_node(new_list)
