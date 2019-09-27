@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 # 栈特性:
 # 队列最大的特性就是先进后出，后进先出，最形象的比喻就是摞在一起的盘子
 # 用数组可以实现栈，链表也可以实现栈
@@ -5,37 +6,54 @@
 #
 # Author: AllenGFLiu
 # #####################################################
-import sys
-sys.path[0]='D:\\GitHub\\geektime'
-
-from linked_list.one_way_linked_list import LinkedList
 
 
-class ListStack():
-    """使用之前实现的单链表实现栈的数据结构。
+class Node:
+    def __init__(self, value):
+        self.val = value
+        self.next = None
+
+
+class ListStack:
+    """基於單鏈錶實現棧的數據結構。
     基于链表的栈，没有容量限制。
     
-    push:压入栈，压入成功则返回True.
+    push:入栈.
 
     pop:出栈，正常出栈返回出栈的值，若无数据可出，则返回None.
     """
     def __init__(self):
-        self.list = LinkedList()
+        self.head = None
 
     def push(self, value):
-        self.list.insert(value)
-        return True
+        new_node = Node(value)
+        if self.head is None:
+            self.head = new_node
+            return
+
+        new_node.next = self.head
+        self.head = new_node
 
     def pop(self):
-        self.list.delete()
+        if self.head is None:
+            return
+
+        self.head = self.head.next
 
     def __repr__(self):
-        return self.list
+        nums = []
+        node = self.head
+        while node:
+            nums.append(node.val)
+            node = node.next
+        return '->'.join(nums)
 
 
-if __name__ == '__main':
+if __name__ == '__main__':
     my_stack = ListStack()
     my_stack.push('a')
     my_stack.push('b')
     my_stack.push('c')
+    print(my_stack)
+    my_stack.pop()
     print(my_stack)
