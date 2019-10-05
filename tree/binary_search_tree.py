@@ -9,7 +9,7 @@
 # #####################################################
 
 
-from queue import ListQueue
+# from queue import ListQueue
 
 
 class TreeNode:
@@ -138,6 +138,14 @@ class BinarySearchTree:
         else:
             parent.right = child
 
+    def in_order(self):
+        # 中序遍歷
+        # 調用方式:in_order()
+        if self._root is None:
+            return []
+        
+        return self._in_order(self._root)
+
     def _in_order(self, node):
         # 中序遍歷輔助函數
         if node is None :
@@ -148,43 +156,51 @@ class BinarySearchTree:
         res.append(node._val)
         res.extend(self._in_order(node.right))
         return res
+
+    def node_sum(self, L, R):
+        root_list = self.in_order()
+        sum = 0
+        for value in root_list:
+            if value >= L and value <= R:
+                sum += value
+        return sum
     
-def bfs_print(bst):
-        list_queue = ListQueue()
-        tmp_node = bst._root
-        list_queue.enqueue(tmp_node._val)
-        while not list_queue.is_empty():
-            tmp_node = TreeNode(list_queue.dequeue())
-            print(list_queue.dequeue())
+# def bfs_print(bst):
+#         list_queue = ListQueue()
+#         tmp_node = bst._root
+#         list_queue.enqueue(tmp_node._val)
+#         while not list_queue.is_empty():
+#             tmp_node = TreeNode(list_queue.dequeue())
+#             print(list_queue.dequeue())
 
-            if bst.get_left(tmp_node):
-                left_value = bst.get_left(tmp_node)
-                list_queue.enqueue(left_value)
-                print(left_value, end=' ')
+#             if bst.get_left(tmp_node):
+#                 left_value = bst.get_left(tmp_node)
+#                 list_queue.enqueue(left_value)
+#                 print(left_value, end=' ')
 
-            if bst.get_right(tmp_node):
-                right_value = bst.get_right(tmp_node)
-                list_queue.enqueue(right_value)
-                print(right_value, end=' ')
+#             if bst.get_right(tmp_node):
+#                 right_value = bst.get_right(tmp_node)
+#                 list_queue.enqueue(right_value)
+#                 print(right_value, end=' ')
 
 
 
-if __name__ == "__main__":
-    bst = BinarySearchTree()
-    l = [12, 10, 15, 8, 11, 14, 17]
-    for i in l:
-        bst.insert(i)
+# if __name__ == "__main__":
+#     bst = BinarySearchTree()
+#     l = [12, 10, 15, 8, 11, 14, 17]
+#     for i in l:
+#         bst.insert(i)
 
-    bfs_print(bst)
+#     bfs_print(bst)
     
 
-    def in_order(self):
-        # 中序遍歷
-        # 調用方式:in_order()
-        if self._root is None:
-            return []
+#     def in_order(self):
+#         # 中序遍歷
+#         # 調用方式:in_order()
+#         if self._root is None:
+#             return []
         
-        return self._in_order(self._root)
+#         return self._in_order(self._root)
 
 
 if __name__ == '__main__':
@@ -199,3 +215,4 @@ if __name__ == '__main__':
     print(bst.in_order())
     bst.delete(15)
     print(bst.in_order())
+    print(bst.node_sum(10, 20))
