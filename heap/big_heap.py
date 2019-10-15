@@ -10,6 +10,10 @@
 #    每遍歷一個元素,就堆化一次,一直到數組下標為1處時,堆化完成,得到一個大頂堆
 # 排序思路:取大頂堆對應數組的下標為1的元素(就是最大的那個),跟數組最後一個元素交換位置,然後對除最後一個元素除外的部分數組堆化
 #    然後取新產生的大頂堆的對應數組下標為1的元素,跟數組最後一個元素交換位置,以此類推,最終得到一個從小到大有序的新數組
+#
+# Python 中內置的有heapq, 是一個小頂堆,直接 import heapq 使用即可.
+# 常見用法查看 help(heapq)
+#
 # Author: AllenGFLiu
 # #####################################################
 
@@ -42,7 +46,6 @@ class BigHeap():
         value_index = self._array.index(value)
         self._array[value_index], self._array[self._count] = self._array[self._count], 0
         
-        # replace_value = self._array[value_index]
         child_index = value_index * 2
         while child_index < self._count and self._array[child_index // 2] < self._array[child_index]:
             self._array[child_index], self._array[child_index // 2] = self._array[child_index // 2], self._array[child_index]
@@ -50,6 +53,9 @@ class BigHeap():
         
 
 def build_heap(origin_list):
+    # 创建堆时要注意在数组存储时是存储在下标为0还是下标为1的位置
+    # 下标为1时左右子节点为2*i/2*i+1
+    # 下标为0时左右子节点为2*i+1/2*i+2
     length = len(origin_list)-1
     index = length // 2
     while index > 0:
