@@ -11,6 +11,7 @@
 # | |-->|3|-->| |-->|7|-->之后的省略
 # 其中第一个节点是self._head节点，定义为一个有MAX_LEVEL层级的空节点
 # 第二个节点3有2层 第三个节点6有5层 第四个节点7有1层 通过这几个举例应该就能看懂insert方法了
+# 打印方法print_skiplist逐層打印層內元素值
 # Author: AllenGFLiu
 # #####################################################
 import random
@@ -24,10 +25,10 @@ class ListNode:
 
 class SkipList:
     # 此样例代码只存储整数，并且不重复
-    MAX_LEVEL = 16  # 定义一个最大层级数
+    MAX_LEVEL = 16  # 定义一个最大层级数，防止random时出现过大的数据
 
     def __init__(self):
-        self._level_count = 1
+        self._level_count = 1  # 标识本跳表对象内部实际的最大的层级数
         self._head = ListNode()
         self._head._forwards = [None] * SkipList.MAX_LEVEL
 
@@ -58,7 +59,7 @@ class SkipList:
             update[i]._forwards[i] = new_node
 
     def __repr__(self):
-        # 此方法只返回了本聊表的原始链表层数据
+        # 此方法只返回了本跳表的原始链表层数据
         # 不包含在此链表层之上建立的索引层数据
         values = []
         p = self._head
@@ -66,6 +67,16 @@ class SkipList:
             values.append(str(p._forwards[0]._data))
             p = p._forwards[0]
         return '->'.join(values)
+    
+    def print_skiplist(self):
+        # 此打印方法從最高層逐層打印內部節點_data值
+        for i in range(self._level_count-1, -1, -1):
+            p = self._head
+            values = []
+            while p._forwards[i]:
+                values.append(str(p._forwards[i]._data))
+                p = p._forwards[i]
+            print('第'+str(i)+'層', '->'.join(values))
 
     def find(self, value):
         p = self._head
@@ -75,6 +86,18 @@ class SkipList:
         
         return p._forwrads[0] if p._forwards[0] and p._forwards[0]._data == value else None
 
+    def delete(self, value):
+        update = [None] * self._level_count
+        p = self._head
+        for i in range(self._level_count-1, -1, -1):
+            while p._forwards[i] and p._forwards[i]._data < value:
+                p = p._forwards[i]
+            update[i] = p
+        
+        if p._forwards[0] and p._forwards[0]._data == value:
+            for i in range(self._level_count-1, -1, -1):
+                if update[i]._forwards[i] and update[i]._forwards[i]._data == value:
+                    update[i]._forwards[i] = update[i]._forwards[i]._forwards[i]
 
 
 
@@ -82,4 +105,5 @@ if __name__ == '__main__':
     l = SkipList()
     for i in range(10):
         l.insert(i)
-    print(l)
+    # print(l)
+    l.print_skiplist()
