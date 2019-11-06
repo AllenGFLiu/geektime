@@ -1,5 +1,5 @@
 # -*-: coding:utf-8 -*-
-from collections import deque
+from collections import deque  # 双向队列
 from graph import UndirectedGraph
 
 
