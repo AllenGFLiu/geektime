@@ -19,7 +19,7 @@ class ArrayQueue:
     dequeue : 从头部删除一个元素，并返回值
     """
     def __init__(self, capacity):
-        self._array = ['*'] * capacity
+        self._array = ['*'] * capacity  # 非必要，只是为了演示数据的跳跃感
         self._capacity = capacity
         self._head = 0
         self._tail = 0
@@ -63,26 +63,18 @@ class ListQueue:
 
     def enqueue(self, value):
         new_node = Node(value)
-        if self._head is None:
+        if self._tail is None:
             self._head = new_node
         else:
-            new_node.next = self._tail
+            self._tail.next = new_node
         self._tail = new_node
+        return True
 
     def dequeue(self):
-        return_value = self._head._value
-        if self._head != self._tail:
-            tmp_node = self._tail
-            while tmp_node.next._value != self._head._value:
-                tmp_node = tmp_node.next
-            tmp_node.next = None
-            self._head = tmp_node
-            # return return_value
-        else:
-            self._head = None
-            self._tail = None
-            # return
-        return return_value
+        if self._head:
+            value = self._head._value
+            self._head = self._head.next
+            return value
             
     def is_empty(self):
         if self._head:
@@ -91,11 +83,11 @@ class ListQueue:
         
     def __repr__(self):
         nums = []
-        last_node = self._tail if self._tail else self._head
-        while last_node:
-            nums.append(str(last_node._value))
-            last_node = last_node.next
-        return '->'.join(nums)        
+        node = self._head
+        while node:
+            nums.append(str(node._value))
+            node = node.next
+        return '<-'.join(nums)        
 # 链表实现队列结束
 
 
