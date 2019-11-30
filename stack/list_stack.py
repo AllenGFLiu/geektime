@@ -27,18 +27,13 @@ class ListStack:
 
     def push(self, value):
         new_node = Node(value)
-        if self.head is None:
-            self.head = new_node
-            return
-
         new_node.next = self.head
-        self.head = new_node
+        self.head = new_node 
 
     def pop(self):
-        if self.head is None:
-            return
-
-        self.head = self.head.next
+        if self.head:
+            value = self.head.val
+            self.head = self.head.next
 
     def __repr__(self):
         nums = []
