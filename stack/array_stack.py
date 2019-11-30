@@ -28,6 +28,16 @@ class ArrayStack():
         self.array[self.count]=value
         self.count += 1
         return True
+        
+    def dynamic_push(self, value):
+        if self.count == self.capacity:
+            new_list = ['*'] * self.capacity
+            self.capacity *= 2
+            self.array.extend(new_list)
+
+        self.array[self.count] = value
+        self.count += 1
+        return True
 
     def pop(self):
         if self.count == 0:
@@ -43,10 +53,11 @@ class ArrayStack():
 
 
 if __name__ == '__main__':
-    my_stack = ArrayStack(5)
+    my_stack = ArrayStack(3)
     my_stack.push('a')
     my_stack.push('b')
     my_stack.push('c')
+    my_stack.dynamic_push('d')
     print(my_stack)
     value = my_stack.pop()
     print(value)
