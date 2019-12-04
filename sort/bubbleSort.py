@@ -12,7 +12,8 @@ def bubbleSort(myList):
     if length <= 1:
         return
     for i in range(length):
-        exchange = False
+        exchange = False  # 当已经有序后，就不会发生元素交换了，就可以跳出循环，避免无效循环继续执行
+        print(myList)  # 方便看每次排序之后的样子
         for j in range(length-i-1):
             if myList[j] > myList[j+1]:
                 myList[j], myList[j+1] = myList[j+1], myList[j]

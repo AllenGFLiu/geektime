@@ -14,22 +14,17 @@ def insertionSort(myList):
         return
 
     for i in range(length)[1:]:
-        # value 就是未排序list的第一个元素
-        value = myList[i]
         j = i - 1
         while j >= 0:
-            if myList[j] > value:
-                # 只有当value比前面的元素小时，才会产生移动
-                myList[j+1] = myList[j]
+            if myList[j] > myList[j+1]:
+                # 只有当后一个元素比前面的元素小时，才会产生移动
+                myList[j+1], myList[j] = myList[j], myList[j+1]
             else:
                 break
             j -= 1
-        # 在以上的移动结束后，把未排序list的第一个元素插入到该去的位置
-        # 因为while循环中有 j = j - 1,所以最后插入的位置应该是j+1的位置
-        myList[j+1] = value
 
 if __name__ == "__main__":
-    List = [3, 5, 2, 1, 4]
+    List = [3, 1, 2, 8, 4]
     print('排序前:')
     print(List)
     insertionSort(List)
