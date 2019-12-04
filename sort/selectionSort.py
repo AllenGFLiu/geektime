@@ -13,10 +13,16 @@ def insertionSort(myList):
 
     for i in range(length):
         minIndex = i
+        transfer = False
         for j in range(i+1, length):
             if myList[minIndex] > myList[j]:
                 minIndex = j
-        myList[i], myList[minIndex] = myList[minIndex], myList[i]
+                transfer = True  # 增加一个transfer标志，减少已经有序之后的无效循环动作
+        if transfer:
+            myList[i], myList[minIndex] = myList[minIndex], myList[i]
+        else:
+            break
+        print(myList)  # 只是show出改动过程而已
 
 
 if __name__ == "__main__":
