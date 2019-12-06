@@ -25,8 +25,8 @@ def quick_sort(nums):
         if p >= r: return
 
         q = partition(array, p, r) # 返回pivot所在的索引，并把原始数组分成三份：比pivot小的/pivot/比pivot大的
-        recursive_divide(array, p, q-1) # 对比pivot小的部分递归
-        recursive_divide(array, q+1, r) # 对比pivot大的部分递归
+        recursive_divide(array, p, q-1) # 让比pivot小的部分递归
+        recursive_divide(array, q+1, r) # 让比pivot大的部分递归
 
     recursive_divide(nums, 0, len(nums)-1)
 
