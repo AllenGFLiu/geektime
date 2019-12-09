@@ -18,7 +18,7 @@ def binsearch(sorted_list, value):
     high = len(sorted_list) - 1
 
     while low <= high:
-        middle = (low + high) // 2
+        middle = low + ((high-low) >> 1)
         if value == sorted_list[middle]:
             return middle
         elif value > sorted_list[middle]:
@@ -36,7 +36,7 @@ def binsearch_first_equal(sorted_list, value):
     high = len(sorted_list) - 1
 
     while low <= high:
-        midd = low + (high-low) // 2
+        midd = low + ((high-low) >> 1)
         midd_value = sorted_list[midd]
         if value > midd_value:
             low = midd + 1
@@ -58,7 +58,7 @@ def binsearch_last_equal(sorted_list, value):
     high = len(sorted_list) - 1
 
     while low <= high:
-        midd = low + (high-low)//2
+        midd = low + ((high-low) >> 1)
         midd_value = sorted_list[midd]
         if value > midd_value:
             low = midd + 1
@@ -80,7 +80,7 @@ def binsearch_firste_large_equal(sorted_list, value):
     high = len(sorted_list) - 1
 
     while low <= high:
-        midd = low + (high-low) // 2
+        midd = low + ((high-low) >> 1)
         midd_value = sorted_list[midd]
         if midd_value >= value:
             if midd == 0 or sorted_list[midd-1] < value:
@@ -100,7 +100,7 @@ def binsearch_last_small_equal(sorted_list, value):
     high = len(sorted_list) - 1
 
     while low <= high:
-        midd = low + (high-low) // 2
+        midd = low + ((high-low) >> 1)
         midd_value = sorted_list[midd]
         if midd_value <= value:
             if midd == len(sorted_list)-1 or sorted_list[midd+1] > value:
