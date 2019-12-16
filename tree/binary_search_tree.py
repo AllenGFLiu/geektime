@@ -128,7 +128,7 @@ class BinarySearchTree:
         # 所以if 塊內的parent和node 二次賦值這個動作很重要
         child = node.left if node.left else node.right
         if parent is None:
-            # 這種情況比較特殊,是樹中只有兩個節點:根節點和它的一個子節點(左或右),並且根節點的值等於value
+            # 這種情況比較特殊,是樹中只有一個節點:根節點,並且根節點的值等於value
             self._root = child
         elif parent.left == node:
             parent.left = child

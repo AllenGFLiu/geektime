@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # 在单链表之上增加多层索引的数据结构就是跳表
 # 跳表是动态数据结构，查找/插入/删除的时间复杂度都是O(logn), 空间复杂度是O(n),是以空间换时间的设计理念
-# 跳表的节点在插入时通过random的形式确定插入调表后拥有的层数，具体看insert方法的注释
+# 跳表的节点在插入时通过random的形式确定插入跳表后拥有的层数，具体看insert方法的注释
 # 跳表示例图：
 # | |-------->| |-------->
 # | |-------->| |-------->
@@ -28,7 +28,7 @@ class SkipList:
     MAX_LEVEL = 16  # 定义一个最大层级数，防止random时出现过大的数据
 
     def __init__(self):
-        self._level_count = 1  # 标识本跳表对象内部实际的最大的层级数
+        self._level_count = 1  # 标识本跳表对象内部实际的最大的层级数,暂时先初始化为0
         self._head = ListNode()
         self._head._forwards = [None] * SkipList.MAX_LEVEL
 
@@ -39,24 +39,25 @@ class SkipList:
         return level
 
     def insert(self, value):
+        # 与链表的插入动作原理类似
         level = self.random_level()  # 以random的形式去随机得到新节点插入调表时所拥有的层数(包含数据层和索引层)
         if self._level_count < level:
             self._level_count = level
         
         new_node = ListNode(value)
         new_node._forwards = [None]*level
-        update = [self._head] * level
+        update = [self._head] * level  # update is similar to a list of prev
 
         p = self._head
         for i in range(level-1, -1, -1):
             while p._forwards[i] and p._forwards[i]._data < value:
                 p = p._forwards[i]
 
-            update[i] = p
+            update[i] = p  # found a prev( prev = self.head if no while loop else p)
 
         for i in range(level):
-            new_node._forwards[i] = update[i]._forwards[i]
-            update[i]._forwards[i] = new_node
+            new_node._forwards[i] = update[i]._forwards[i]  # new_node.next = prev.next
+            update[i]._forwards[i] = new_node  # pre.next = new_node
 
     def __repr__(self):
         # 此方法只返回了本跳表的原始链表层数据
@@ -97,7 +98,7 @@ class SkipList:
         if p._forwards[0] and p._forwards[0]._data == value:
             for i in range(self._level_count-1, -1, -1):
                 if update[i]._forwards[i] and update[i]._forwards[i]._data == value:
-                    update[i]._forwards[i] = update[i]._forwards[i]._forwards[i]
+                    update[i]._forwards[i] = update[i]._forwards[i]._forwards[i]  # similar to prev.next = prev.next.next
 
 
 
