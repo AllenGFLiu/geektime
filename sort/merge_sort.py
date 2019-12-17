@@ -29,7 +29,8 @@ def merge_sort(nums):
     def recursive_divide(array, p, r):
         if p>=r: return
 
-        q = (p+r)//2
+        # q = (p+r)//2
+        q = p + ((r-p)>>1)  # 避免溢出
         recursive_divide(array, p, q)
         recursive_divide(array, q+1, r)
         merge(array, p, q, r)
