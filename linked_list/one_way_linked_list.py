@@ -45,7 +45,7 @@ class LinkedList:
         nums = []
         node = self.head
         while node:
-            nums.append(node._value)
+            nums.append(str(node._value))
             node = node._next
         return '->'.join(nums)
 
@@ -166,19 +166,71 @@ def remove_duplicate_node(head):
     return head
 
 
+def sort_list(head):
+    """在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。
+    """
+    def merge(l, r):
+        new_head = Node(None)
+        tmp = new_head
+        if l and r:
+            if l._value < r._value:
+                tmp._next = l
+                l = l._next
+            else:
+                tmp._next = r
+                r = r._next
+            tmp = tmp._next
+        tmp._next = l if l else r
+        return new_head._next
+
+    def split(node, step):
+        i = 1
+        while i < step and node:
+            node = node._next
+            i += 1
+        if not node:
+            return
+        tmp, node._next = node._next, None
+        return tmp
+
+    
+    if not head or not head._next:
+        return head
+    
+    count = 0
+    node = head
+    while node:
+        count += 1
+        node = node._next
+
+    dummy = Node(None)
+    dummy._next = head
+    bs = 1
+    while bs < count:
+        tail = dummy
+        curr = dummy._next
+        while curr:
+            left = curr
+            right = split(left, bs)
+            curr = split(right, bs)
+            tail._next = merge(left, right)
+            while tail._next:
+                tail = tail._next
+        bs <<= 1
+    return dummy._next
+
+
 
 if __name__ == '__main__':
     my_list = LinkedList()
-    my_list.insert('a')
-    my_list.insert('b')
-    my_list.insert('c')
-    my_list.insert('d')
-    my_list.insert('e')
+    my_list.insert(4)
+    my_list.insert(2)
+    my_list.insert(1)
+    my_list.insert(3)
     print(my_list)
-    my_list.delete()
-    print(my_list)
-    reverse_list = my_list.reverse()
-    print_node(reverse_list)
+    
+    sort_list = sort_list(my_list.head)
+    print_node(sort_list)
     
     # l1 = LinkedList()
     # l1.insert(3)
@@ -224,14 +276,14 @@ if __name__ == '__main__':
     # new_list = merge_two_sorted_list(l1.head, l2.head)
     # print_node(new_list)
 
-    remove_list = LinkedList()
-    remove_list.insert('d')
-    remove_list.insert('a')
-    remove_list.insert('e')
-    remove_list.insert('f')
-    remove_list.insert('a')
-    new_list = remove_specific_node(remove_list.head, 'a')
-    print_node(new_list)
+    # remove_list = LinkedList()
+    # remove_list.insert('d')
+    # remove_list.insert('a')
+    # remove_list.insert('e')
+    # remove_list.insert('f')
+    # remove_list.insert('a')
+    # new_list = remove_specific_node(remove_list.head, 'a')
+    # print_node(new_list)
     # my_list.insert(1)
     # my_list.insert(1)
     # my_list.insert(3)

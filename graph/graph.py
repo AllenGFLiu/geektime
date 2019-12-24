@@ -17,8 +17,8 @@ class UndirectedGraph:
         self.adj_table[t].append(s)
         return True
 
-    def __getitem__(self, index):
-        return self.adj_table[index]
+    # def __getitem__(self, index):
+    #     return self.adj_table[index]
 
     def __repr__(self):
         return str(self.adj_table)
