@@ -6,9 +6,11 @@ from graph import UndirectedGraph
 def print_path(fr, to, prev):
     '''yield from Iterable = for value in Iterable : yield value 
     '''
-    if prev[fr] or fr != to:
+    if prev[fr] is not None or fr != to:
         yield from print_path(fr, prev[to], prev)
     yield str(to)
+
+    # 如上的方法不是很好理解，实际上，就是递归调用
 
 
 def bfs(graph_object, fr, to):
@@ -29,7 +31,7 @@ def bfs(graph_object, fr, to):
 
     while q:
         v = q.popleft()
-        for related in graph_object[v]:
+        for related in graph_object.adj_table[v]:
             if not visited[related]:
                 prev[related] = v
                 if related == to:
@@ -54,7 +56,7 @@ def dfs(graph_object, fr, to):
         if from_vertex == to:
             found = True
             return
-        for related in graph_object[from_vertex]:
+        for related in graph_object.adj_table[from_vertex]:
             if found: return
             if not visited[related]:
                 prev[related] = from_vertex
