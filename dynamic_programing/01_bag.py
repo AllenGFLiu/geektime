@@ -48,5 +48,33 @@ def knapsack2(weight, w):
             return index
 
 
+# 在滿足不超過背包最大承載重量W的前提下,求裝入背包中物品的最大價值
+def knapsack_value(weights, values, w):
+    n = len(weights)
+    states = [[-1 for _ in range(w+1)] for _ in range(n)]  # 使用states二維數組保存同階段元素相同重量下的最大value值
+    states[0][0] = 0
+    if weights[0] <= w:
+        states[0][weights[0]] = values[0]
+
+    for i in range(1, n):
+        for j in range(w+1):
+            if states[i-1][j] >= 0:
+                states[i][j] = states[i-1][j]
+
+        for j in range(w+1-weights[i]):
+            if states[i-1][j] >= 0:
+                v = states[i-1][j] + values[i]
+                if v > states[i][j+weights[i]]:
+                    states[i][j+weights[i]] = v
+
+    max_value = 0
+    for index in range(w+1):
+        if states[n-1][index] > max_value:
+            max_value = states[n-1][index]
+    
+    return max_value
+
+
 if __name__ == '__main__':
-    print(knapsack2([2, 2, 4, 6, 3], 9))
+    # print(knapsack2([2, 2, 4, 6, 3], 9))
+    print(knapsack_value([2,2,4,6,3], [3,4,8,9,6], 9))
