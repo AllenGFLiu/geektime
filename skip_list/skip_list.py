@@ -21,6 +21,7 @@ class ListNode:
     def __init__(self, data=None):
         self._data = data
         self._forwards = []
+        self._index = []
 
 
 class SkipList:
@@ -46,7 +47,8 @@ class SkipList:
         
         new_node = ListNode(value)
         new_node._forwards = [None]*level
-        update = [self._head] * level  # update is similar to a list of prev
+        new_node._index = [None]*level
+        update = [None] * level  # update is similar to a list of prev
 
         p = self._head
         for i in range(level-1, -1, -1):
@@ -58,6 +60,7 @@ class SkipList:
         for i in range(level):
             new_node._forwards[i] = update[i]._forwards[i]  # new_node.next = prev.next
             update[i]._forwards[i] = new_node  # pre.next = new_node
+            new_node._index[i] = i
 
     def __repr__(self):
         # 此方法只返回了本跳表的原始链表层数据
@@ -85,7 +88,7 @@ class SkipList:
             while p._forwards[i] and p._forwards[i]._data < value:
                 p = p._forwards[i]
         
-        return p._forwrads[0] if p._forwards[0] and p._forwards[0]._data == value else None
+        return p._forwards[0] and p._forwards[0]._data == value
 
     def delete(self, value):
         update = [None] * self._level_count
@@ -97,14 +100,22 @@ class SkipList:
         
         if p._forwards[0] and p._forwards[0]._data == value:
             for i in range(self._level_count-1, -1, -1):
-                if update[i]._forwards[i] and update[i]._forwards[i]._data == value:
+                if update[i]._forwards[i] and update[i]._forwards[i]._data == value and update[i]._forwards[i]._index[i]:
                     update[i]._forwards[i] = update[i]._forwards[i]._forwards[i]  # similar to prev.next = prev.next.next
 
 
 
 if __name__ == '__main__':
     l = SkipList()
-    for i in range(10):
-        l.insert(i)
-    # print(l)
+    # for i in range(10):
+    #     l.insert(i)
+    l.insert(1)
+    l.insert(2)
+    l.insert(3)
+    l.insert(3)
+    l.insert(4)
     l.print_skiplist()
+    l.delete(3)
+    l.print_skiplist()
+    print(l.find(1))
+    # print(l)

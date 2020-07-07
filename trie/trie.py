@@ -1,5 +1,5 @@
 # Trie树是为了解决字符串快速匹配问题的数据结构
-# Trie树的本质是利用字符串之间的公共前缀，讲重复的前缀合并在一起，从而实现快速查找。
+# Trie树的本质是利用字符串之间的公共前缀，將重复的前缀合并在一起，从而实现快速查找。
 # Trie树不适用于精确查找，精确查找适合用散列表或红黑树这种更高效的数据结构。
 
 class TrieNode:
@@ -29,6 +29,14 @@ class Trie:
             node = node._children[index]
         return node._is_ending_char
 
+    def startswith(self, prefix):
+        node = self._root
+        for index in map(lambda c: ord(c)-ord('a'), prefix):
+            if not node._children[index]: return False
+            node = node._children[index]
+
+        return True  # 不管是否匹配到最後一個字母,都返回TRUE
+
 
 if __name__ == '__main__':
     strs = ['how', 'hi', 'her', 'hello', 'so', 'see']
@@ -39,5 +47,6 @@ if __name__ == '__main__':
     for s in strs:
         print(trie.find(s))
 
-    print(trie.find('pattern'))
+    print(trie.find('he'))
+    print(trie.startswith('he'))
         

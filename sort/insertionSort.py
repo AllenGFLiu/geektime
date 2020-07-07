@@ -13,7 +13,7 @@ def insertionSort(myList):
     if length <= 1:
         return
 
-    for i in range(length)[1:]:
+    for i in range(1, length):
         j = i - 1
         while j >= 0:
             if myList[j] > myList[j+1]:
@@ -24,7 +24,7 @@ def insertionSort(myList):
             j -= 1
 
 if __name__ == "__main__":
-    List = [3, 1, 2, 8, 4]
+    List = [4, 5, 6, 1, 2, 8, 3]
     print('排序前:')
     print(List)
     insertionSort(List)
